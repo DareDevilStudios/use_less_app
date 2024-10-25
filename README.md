@@ -13,34 +13,30 @@
 - Member 3: Ameen N M - CUSAT
 
 ### Project Description
-[2-3 lines about what your project does]
+A unique productivity app designed to boost your motivation through a fresh approach: constructive demotivation. Share your daily to-dos, and the app responds with tailored, honest feedback that pushes you to accomplish more—every day.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+Every to-do list app lacks the ability to motivate users to complete tasks day by day.
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+Constructive criticism, but with a twist! Instead of typical encouragement, this app offers realistic, sometimes blunt feedback that keeps you on your toes, making you want to prove it wrong. 
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
-
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+- JavaScript
+- Next.js, Express.js
+- React.js
+- Firebase, Supabase
 
 ### Implementation
 For Software:
 # Installation
-[commands]
+npm install
 
 # Run
-[commands]
+npm run dev - client
+npm start - server
 
 ### Project Documentation
 For Software:

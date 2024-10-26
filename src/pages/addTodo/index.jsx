@@ -37,7 +37,7 @@ export default function Index() {
         <CreateTodo todoFetcher={todoFetcher} startCriticise={startCriticise} />
         <FriendsCircle Tasks={Tasks} setstartCri={setstartCri} />
       </div>
-      <Toaster position="bottom-center" reverseOrder={true} />
+      <Toaster position="top-center" reverseOrder={true} />
       <div
         onClick={handleOpenModal}
         className="bg-white text-black py-5 px-7 text-xl rounded-full fixed bottom-3 right-3 cursor-pointer"

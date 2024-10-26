@@ -38,6 +38,9 @@ export default function FriendsCircle({ setstartCri, Tasks }) {
   return (
     <div className='md:w-1/2 w-full h-96 overflow-y-auto bg-white'>
       <h1 className='text-black text-center text-xl font-bold p-3 underline'>{anyTaskIncomplete ? "കണ്ടു പടിക്കടാ!!" : "നീ കൊള്ളാല്ലോടാ!"}</h1>
+      {
+        Tasks.length > 0 ? (
+          <>
       {anyTaskIncomplete ? (
         visibleCriticisms.map((criticism, i) => (
           <Message key={i} text={criticism} isSender={false} />
@@ -45,6 +48,11 @@ export default function FriendsCircle({ setstartCri, Tasks }) {
       ) : (
         <Message text="എല്ലാ ദിവസോം ഇതുപോലെ ഒക്കെ തന്നെ ആയാൽ മതിയായിരുന്നു!" isSender={false} />
       )}
+      </>
+        ):(
+          <Message text="വെറുതെ ഇരിക്കാണ്ട് വല്ലതും ചെയ്യടാ!!" isSender={false} />
+        )
+      }
     </div>
   );
 }

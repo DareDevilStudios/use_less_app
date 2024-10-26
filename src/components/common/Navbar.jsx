@@ -87,7 +87,7 @@ export default function Navbar() {
                     {toastVisible && <Toast message="Logged in successfully!" onClose={hideToast} bgcolor="bg-green-500" />}
                     {user ? (
                         <div className="flex items-center space-x-3">
-                            <p>Welcome {user?.user_metadata?.full_name}</p>
+                            <p className='hidden md:flex'>Welcome {user?.user_metadata?.full_name}</p>
                             <button onClick={openDropDown}>
                                 <Image className='rounded-full' src={user?.user_metadata?.picture} width={30} height={20} alt="User Picture" />
                             </button>

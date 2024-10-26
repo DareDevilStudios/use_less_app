@@ -34,7 +34,7 @@ export default function FriendsCircle({ setstartCri }) {
   }, [setstartCri]);
 
   return (
-    <div className='w-1/2 h-96 overflow-y-auto bg-white'>
+    <div className='md:w-1/2 w-full h-96 overflow-y-auto bg-white'>
       <h1 className='text-black text-center text-xl font-bold p-3 underline'>കണ്ടു പടിക്കടാ!!</h1>
       {visibleCriticisms.map((criticism, i) => (
         <Message key={i} text={criticism} time={new Date().toLocaleTimeString()} isSender={false} />

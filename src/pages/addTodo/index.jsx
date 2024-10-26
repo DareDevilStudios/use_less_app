@@ -26,7 +26,7 @@ export default function Index() {
   return (
     <div className="h-screen bg-gray-900">
       <Navbar />
-      <div className="flex justify-around">
+      <div className="flex md:flex-row flex-col justify-around">
         <CreateTodo startCriticise={startCriticise} />
         <FriendsCircle setstartCri={setstartCri} />
       </div>

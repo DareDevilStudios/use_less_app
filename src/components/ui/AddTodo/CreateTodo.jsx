@@ -97,11 +97,23 @@ const TodoApp = ({startCriticise}) => {
 
 
     // Toggle task completion
-    const toggleTask = (id) => {
+    const toggleTask = async (id) => {
+        const { data, error } = await supabase
+            .from('user_data')
+            .update({ status: !tasks.find(task => task.id === id).status })
+            .eq('id', id)
+
+        if (error) {
+            console.error('Error updating task:', error);
+            return;
+        }
+
+        console.log("updated todo : ",data);
         const updatedTasks = tasks.map(task =>
             task.id === id ? { ...task, status: !task.status } : task
         );
         setTasks(updatedTasks);
+
         console.log("updatedTasks", updatedTasks);
     };
     

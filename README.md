@@ -53,7 +53,7 @@ For Software:
 
 ### Project Demo
 # Video
-[[Add your demo video link here]](https://drive.google.com/file/d/1voNeIKNnXA6EquaiCgOCLVjjKaGIOKST/view?usp=sharing)
+https://drive.google.com/file/d/1ueIUx7T9FrFJtNdB1MpxvBVGgQFzgPWM/view?usp=sharing
 
 ## Team Contributions
 - Thrisha: Front-end and backend

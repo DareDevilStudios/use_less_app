@@ -3,24 +3,13 @@ import supabase from '@/supabase';
 import Toast from '@/components/common/Toast';
 import toast from 'react-hot-toast';
 
-const TodoApp = ({startCriticise}) => {
+const TodoApp = ({ startCriticise, todoFetcher }) => {
     const [toastVisible, setToastVisible] = useState(false);
     const criticisms = [
-        "Look at your friend; they're already done with their tasks!",
-        "Why can't you be more like your cousin? They manage their time so well!",
-        "Do you see how quickly others finish their work?",
-        "If only you put in half the effort your sister does!",
-        "Your friend has already completed their homework; what are you doing?",
-        "Why can't you be as responsible as your classmates?",
-        "Even your neighbor's son finished this long ago!",
-        "I don't understand why you can't be like that child who always excels!",
-        "You know your cousin is already ahead in their studies, right?",
-        "Look at your friends; they're making progress while you're lagging!",
-        "If you keep this up, your friends will leave you behind!",
-        "Why do you make it so difficult for yourself when others find it easy?",
-        "Do you want to be the only one without progress?",
-        "Everyone else is moving forward; are you planning to stay behind?",
-        "Remember how your friend managed to do this in no time?"
+        "എടാ നിനക്ക് പറഞ്ഞ പണി ഒന്നും അല്ല ഇത്",
+        "നിനക്ക് പറ്റില്ലെങ്കിൽ പറ ഞാൻ ചെയ്യാം ",
+        "നിന്നെ കൊണ്ട് ഈ വീടിനും നാടിനും എന്തെങ്കിലും ഗുണമുണ്ടോ ",
+        "ഒരു പണിയും എടുക്കാതെ വെറുതെ കുത്തി ഇരിക്ക്"
     ];
 
     const showToast = () => {
@@ -74,6 +63,10 @@ const TodoApp = ({startCriticise}) => {
     }, []);
 
     useEffect(() => {
+        todoFetcher(tasks)
+    }, [tasks]);
+
+    useEffect(() => {
         const checkTaskTimes = () => {
             const currentTime = new Date();
 
@@ -84,7 +77,7 @@ const TodoApp = ({startCriticise}) => {
                     const randomCritic = criticisms[Math.floor(Math.random() * criticisms.length)];
                     toast(randomCritic, { icon: '😤' });
                 }
-                else{
+                else {
                     startCriticise()
                 }
             });
@@ -108,7 +101,7 @@ const TodoApp = ({startCriticise}) => {
             return;
         }
 
-        console.log("updated todo : ",data);
+        console.log("updated todo : ", data);
         const updatedTasks = tasks.map(task =>
             task.id === id ? { ...task, status: !task.status } : task
         );
@@ -116,7 +109,7 @@ const TodoApp = ({startCriticise}) => {
 
         console.log("updatedTasks", updatedTasks);
     };
-    
+
 
     // Open the modal for editing or adding a task
     const openModal = async (task) => {

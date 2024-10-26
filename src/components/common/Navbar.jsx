@@ -93,8 +93,8 @@ export default function Navbar() {
                             </button>
                             {DropDown && (
                                 <div className="absolute right-0 top-4 mt-12 w-48 bg-white border border-gray-300 rounded-lg shadow-lg py-1">
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                                    {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a> */}
                                     <button
                                         onClick={signout}
                                         className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"

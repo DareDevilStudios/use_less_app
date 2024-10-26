@@ -11,6 +11,8 @@ export default function Index() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [startCri, setstartCri] = useState(false);
 
+  const [Tasks, setTasks] = useState([]);
+
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -23,12 +25,17 @@ export default function Index() {
     setstartCri(!startCri);
   }
 
+  const todoFetcher = (a) => {
+    console.log(a)
+    setTasks(a);
+  }
+
   return (
     <div className="h-screen bg-gray-900">
       <Navbar />
       <div className="flex md:flex-row flex-col justify-around">
-        <CreateTodo startCriticise={startCriticise} />
-        <FriendsCircle setstartCri={setstartCri} />
+        <CreateTodo todoFetcher={todoFetcher} startCriticise={startCriticise} />
+        <FriendsCircle Tasks={Tasks} setstartCri={setstartCri} />
       </div>
       <Toaster position="bottom-center" reverseOrder={true} />
       <div

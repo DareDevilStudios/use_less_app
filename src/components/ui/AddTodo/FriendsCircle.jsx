@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Message from './Message';
 
-export default function FriendsCircle({ setstartCri }) {
+export default function FriendsCircle({ setstartCri, Tasks }) {
   const criticisms = [
-    "Look at how quickly the project was completed; some are already wrapping up while you're still planning.",
-    "It's impressive that others have finished their certifications this month, yet you haven't started yours.",
-    "Some teams submitted their reports ahead of schedule, while it seems like you're still stuck on the first draft.",
-    "Others organized their events in just a few days, while it feels like you're still waiting for the right moment to begin.",
-    "It's amazing how quickly some are learning the new software, while you seem hesitant to give it a try.",
-    "Many have launched their apps already, but it looks like you're still contemplating your next steps.",
-    "Others have been able to gather their teams for brainstorming sessions, yet it seems like yours keeps getting postponed.",
-    "Look at how swiftly some have turned their ideas into prototypes, while you're still refining your concept.",
-    "It's great to see so many networking effectively at recent events, while you missed out on the opportunity.",
-    "Some have transformed feedback into actionable changes in no time, while you seem to be avoiding it altogether."
+    "ഡാ ഡാ നീ ആ അപ്പുറത്തെ ചെക്കനെ കണ്ട് പടിക്ക്",
+    "ബാക്കി ഉള്ളവരൊക്കെ എല്ലാം തീർത്തു നീയിങ്ങനെ നടന്നോ ",
+    "അവൻ നാളത്തെ പണി ഇന്ന് തന്നെ തുടങ്ങി ",
+    "അവനെ പോലെ കഷ്ടപ്പെട്ടു ജീവിക്ക് നാലു കാശ് കയ്യിൽ നില്കും",
+    "എന്നാ പിന്നെ എല്ലാം പറഞ്ഞ പോലെ ",
   ];
 
-  const [visibleCriticisms, setVisibleCriticisms] = useState([]);
+  const [visibleCriticisms, setVisibleCriticisms] = useState(["എന്താ മാഷെ വല്ലതും നടക്കുമോ ഇന്ന്?"]);
+  const [anyTaskIncomplete, setAnyTaskIncomplete] = useState(false);
 
   useEffect(() => {
-    if (setstartCri) {
+    // Check if any task has a status of false
+    const hasIncompleteTask = Tasks.some(task => task.status === false);
+    setAnyTaskIncomplete(hasIncompleteTask);
+  }, [Tasks]);
+
+  useEffect(() => {
+    if (setstartCri && anyTaskIncomplete) {
       let index = 0;
       const interval = setInterval(() => {
         if (index < criticisms.length) {
@@ -27,18 +29,22 @@ export default function FriendsCircle({ setstartCri }) {
         } else {
           clearInterval(interval);
         }
-      }, 10000); // 3000 ms = 3 seconds
+      }, 10000); // 10000 ms = 10 seconds
 
       return () => clearInterval(interval); // Cleanup on unmount
     }
-  }, [setstartCri]);
+  }, [setstartCri, anyTaskIncomplete]);
 
   return (
     <div className='md:w-1/2 w-full h-96 overflow-y-auto bg-white'>
-      <h1 className='text-black text-center text-xl font-bold p-3 underline'>കണ്ടു പടിക്കടാ!!</h1>
-      {visibleCriticisms.map((criticism, i) => (
-        <Message key={i} text={criticism} time={new Date().toLocaleTimeString()} isSender={false} />
-      ))}
+      <h1 className='text-black text-center text-xl font-bold p-3 underline'>{anyTaskIncomplete ? "കണ്ടു പടിക്കടാ!!" : "നീ കൊള്ളാല്ലോടാ!"}</h1>
+      {anyTaskIncomplete ? (
+        visibleCriticisms.map((criticism, i) => (
+          <Message key={i} text={criticism} isSender={false} />
+        ))
+      ) : (
+        <Message text="എല്ലാ ദിവസോം ഇതുപോലെ ഒക്കെ തന്നെ ആയാൽ മതിയായിരുന്നു!" isSender={false} />
+      )}
     </div>
   );
 }

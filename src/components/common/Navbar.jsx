@@ -1,23 +1,45 @@
 import supabase from '@/supabase'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
+import Toast from './Toast';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
+    const router = useRouter();
     const [user, setUser] = useState(null);
     const [DropDown, setDropDown] = useState(false);
     const [loader, setLoader] = useState(false);
+    const [toastVisible, setToastVisible] = useState(false);
+
+    const showToast = () => {
+        setToastVisible(true);
+    };
+
+    const hideToast = () => {
+        setToastVisible(false);
+    };
 
     const openDropDown = () => {
         setDropDown(!DropDown);
     };
 
     const auth = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
+        supabase.auth.signInWithOAuth({
             provider: 'google'
-        });
-        if (error) {
-            console.error('OAuth sign in error:', error);
-        }
+        })
+            .then(async ({ data, error }) => {
+                if (error) {
+                    //   showToast('Sign-in failed!');
+                } else {
+                    setTimeout(() => {
+
+                        showToast();
+                    }, 5000);
+                }
+            })
+            .catch(err => {
+                // showToast('An error occurred!');
+            });
     };
 
     const signout = async () => {
@@ -26,26 +48,43 @@ export default function Navbar() {
         await supabase.auth.signOut();
         setUser(null);    // Manually clear user state after signout
         setLoader(false); // Hide the loader after signout
+        router.push('/');
     };
 
     useEffect(() => {
         const getUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();  // Get the user data
             setUser(user);  // Update the user state
+            console.log("user", user);
+            
+
+            let { data: user_info, error } = await supabase
+                .from('user_info')
+                .select("*")
+                .eq('user_id', user?.id)
+
+            console.log(user_info);
+            if (user && user_info.length === 0) {
+                const { data, error } = await supabase
+                    .from('user_info')
+                    .upsert({ info: user.user_metadata, user_id: user.id })
+                    .select()
+            }
         };
 
         getUser();
     }, []);
 
+
     return (
         <div>
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
                         <h1 className="text-2xl">💀</h1>
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Thantha vibe.ai</span>
                     </a>
-
+                    {toastVisible && <Toast message="Logged in successfully!" onClose={hideToast} bgcolor="bg-green-500" />}
                     {user ? (
                         <div className="flex items-center space-x-3">
                             <p>Welcome {user?.user_metadata?.full_name}</p>
@@ -58,7 +97,7 @@ export default function Navbar() {
                                     <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
                                     <button
                                         onClick={signout}
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                                        className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
                                         disabled={loader} // Disable button when loader is true
                                     >
                                         <span>Sign out</span>
